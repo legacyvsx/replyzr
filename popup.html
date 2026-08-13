@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>Replyzr</title>
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="wordmark">Reply<span>zr</span></div>
+      <div class="model" id="model">grok-4.6</div>
+    </header>
+
+    <div class="subject" id="subject" hidden></div>
+
+    <div class="bar">
+      <button id="run" class="run">Read the replies</button>
+      <button id="stop" class="stop" hidden>Stop</button>
+      <span class="status" id="status"></span>
+    </div>
+
+    <div class="notice" id="notice" hidden></div>
+
+    <main id="report"></main>
+
+    <footer class="foot" id="foot" hidden></footer>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

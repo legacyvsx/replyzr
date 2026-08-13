@@ -1,0 +1,341 @@
+/* Replyzr — a readout, not a dashboard.
+   Ink and slate, one mint/coral axis for sentiment, amber reserved for ratios. */
+
+:root {
+  --ink: #0e1016;
+  --panel: #161a24;
+  --panel-lift: #1c2130;
+  --rule: #272d3d;
+  --text: #dfe3ee;
+  --muted: #7a8397;
+  --pos: #4ed4a0;
+  --neg: #f2705c;
+  --amber: #e8b84b;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", Menlo, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+/* Chrome caps extension popups at 800x600. 640 leaves room for the window
+   chrome on smaller screens while giving the rows enough width to pair up. */
+body {
+  width: 640px;
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* --- masthead ----------------------------------------------------------- */
+
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.wordmark span { color: var(--muted); }
+
+.model {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+.subject {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 12px;
+}
+.subject b { color: var(--text); font-weight: 600; }
+.subject .snippet {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* --- controls ----------------------------------------------------------- */
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+}
+
+.run {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--text);
+  border: 0;
+  border-radius: 2px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.run:hover { background: #fff; }
+.run:disabled { background: var(--rule); color: var(--muted); cursor: default; }
+.run:focus-visible { outline: 2px solid var(--pos); outline-offset: 2px; }
+
+.status {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  flex: 1;
+}
+
+.stop {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 7px 11px;
+  cursor: pointer;
+}
+.stop:hover { border-color: var(--neg); color: var(--neg); }
+.stop:focus-visible { outline: 2px solid var(--neg); outline-offset: 2px; }
+
+.notice {
+  margin: 0 16px 12px;
+  padding: 10px 12px;
+  border-left: 2px solid var(--neg);
+  background: var(--panel);
+  font-size: 12px;
+  color: #f6c4bb;
+}
+
+/* --- sections ----------------------------------------------------------- */
+
+.section { border-top: 1px solid var(--rule); }
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 12px 16px 8px;
+}
+.section-title {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.section-sub {
+  display: block;
+  margin-top: 2px;
+  font-style: normal;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  color: #5b6478;
+}
+
+.section-count {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Two columns: sentiment and ratios run full width, emotions and agreement
+   sit side by side. Roughly halves the height of each section. */
+.section-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+}
+
+.row {
+  padding: 10px 16px;
+  border-top: 1px solid rgba(39, 45, 61, 0.55);
+  min-width: 0;
+}
+.row.wide { grid-column: 1 / -1; }
+.row.second { border-left: 1px solid rgba(39, 45, 61, 0.55); }
+.row-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.row-value {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.row-note { color: var(--muted); font-size: 11.5px; margin-top: 3px; }
+
+/* signature element: the sentiment track */
+.track {
+  position: relative;
+  height: 22px;
+  margin-top: 8px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background: linear-gradient(
+    90deg,
+    rgba(242, 112, 92, 0.16),
+    rgba(122, 131, 151, 0.06) 50%,
+    rgba(78, 212, 160, 0.16)
+  );
+}
+.track .tick {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--rule);
+}
+.track .zero { background: var(--muted); opacity: 0.55; }
+.track .needle {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: var(--text);
+  transform: translateX(-1px);
+}
+.track .needle::after {
+  content: "";
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  background: var(--text);
+  transform: rotate(45deg);
+}
+.scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.stack {
+  display: flex;
+  height: 8px;
+  margin-top: 8px;
+  gap: 1px;
+  background: var(--rule);
+}
+.stack i { display: block; height: 100%; }
+.stack .agree { background: var(--pos); }
+.stack .neutral { background: #4a5468; }
+.stack .disagree { background: var(--neg); }
+
+.legend {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+.legend b { color: var(--text); font-weight: 500; }
+
+.emotions { display: flex; gap: 8px; margin-top: 6px; }
+.emotion {
+  flex: 1;
+  background: var(--panel);
+  border-left: 2px solid var(--rule);
+  padding: 7px 9px;
+}
+.emotion .name {
+  font-size: 13px;
+  text-transform: capitalize;
+}
+.emotion .share {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.ratio-value { color: var(--amber); }
+.ratio-none { color: var(--text); }
+
+.list { padding: 4px 16px 12px; }
+.list details > summary {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 6px 0;
+}
+.list details > summary:hover { color: var(--text); }
+.list details[open] > summary { margin-bottom: 2px; }
+.item {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid rgba(39, 45, 61, 0.55);
+}
+.item .likes {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--amber);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.item .who { color: var(--muted); font-size: 11px; font-family: var(--mono); }
+.item .who a { color: var(--muted); text-decoration: none; }
+.item .who a:hover { color: var(--text); }
+.item .body { font-size: 12px; }
+.item .dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+
+.foot {
+  padding: 10px 16px 14px;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.empty {
+  padding: 26px 16px;
+  color: var(--muted);
+  font-size: 12.5px;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
