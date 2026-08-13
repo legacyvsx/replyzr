@@ -88,4 +88,4 @@ Two honest limits on "the entire thread":
 - **Reply-level detection is heuristic**, based on the presence and content of the "Replying to" line.
 - **Non-English UI**: the aria-label and section-header matching assumes X is set to English.
 
-x.com/h45hb4ng | morallyrelative.com 
+<a href="https://x.com/h45hb4ng">@h45hb4ng</a> | <a href="https://morallyrelative.com">morallyrelative.com</a> 
