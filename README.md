@@ -85,7 +85,7 @@ Two honest limits on "the entire thread":
 - **Like counts are read from the rendered DOM.** Exact counts come from the like button's `aria-label`; if X changes that markup the parser needs updating. Same for the `data-testid` selectors — that's the fragile part of any X scraper.
 - **A partial read is a sample, not a census.** At the default `maxReplies: 150` most large threads *will* be partial reads — the footer says how the read ended. Sentiment over the first 150 of a 4,000-reply thread is a real number about a biased subset — biased by whatever X's relevance model favours, which includes your own network.
 - **The tab moves.** A full run reloads the page once or twice. `restoreOriginalUrl: true` sends it back afterwards.
-
-  x.com/h45hbang | morallyrelative.com
 - **Reply-level detection is heuristic**, based on the presence and content of the "Replying to" line.
 - **Non-English UI**: the aria-label and section-header matching assumes X is set to English.
+
+x.com/h45hb4ng | morallyrelative.com 
