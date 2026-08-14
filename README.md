@@ -62,7 +62,7 @@ Two honest limits on "the entire thread":
 | `apiKey` | — | xAI key. Required. |
 | `model` | `grok-4.6` | Any xAI chat model. |
 | `batchSize` | `40` | Replies per API request. |
-| `maxTextChars` | `400` | Replies text is truncated to this many characters before being sent. **0 = unlimited** |
+| `maxTextChars` | `400` | Reply text is truncated to this many characters before being sent. **0 = unlimited.** |
 | `concurrency` | `3` | Batches in flight. Drop to 1 if xAI returns 429s. |
 | `maxReplies` | `150` | Replies collected in the main pass. **0 = unlimited.** |
 | `maxScrolls` | `400` | Scroll steps. **0 = unlimited.** Headroom — `maxReplies` should be what stops a normal read. |
