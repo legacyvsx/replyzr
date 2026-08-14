@@ -62,6 +62,7 @@ Two honest limits on "the entire thread":
 | `apiKey` | — | xAI key. Required. |
 | `model` | `grok-4.6` | Any xAI chat model. |
 | `batchSize` | `40` | Replies per API request. |
+| `maxTextChars` | `400` | Replies text is truncated to this many characters before being sent. **0 = unlimited** |
 | `concurrency` | `3` | Batches in flight. Drop to 1 if xAI returns 429s. |
 | `maxReplies` | `150` | Replies collected in the main pass. **0 = unlimited.** |
 | `maxScrolls` | `400` | Scroll steps. **0 = unlimited.** Headroom — `maxReplies` should be what stops a normal read. |
@@ -72,7 +73,7 @@ Two honest limits on "the entire thread":
 | `expandMoreReplies` | `true` | Clicks "Show more replies". Needed for a full read. |
 | `expandFlaggedReplies` | `false` | Also expands offensive/spam-flagged replies. |
 | `recoverFromErrors` | `true` | Clicks Retry when the timeline errors out. |
-| `mainSort` | `"relevant"` | Sort for the main section. `"relevant"` is X's default; `"likes"` also available. |
+| `mainSort` | `"relevant"` | Sort for the main section. `"relevant"` is X's default; `"likes"` and `"recency"` also available. |
 | `topFromLikesPass` | `true` | Read the top N in a separate likes-sorted pass. False = re-sort the main pass instead. |
 | `restoreOriginalUrl` | `false` | Send the tab back to where it started afterwards. |
 | `closeRatioThreshold` | `0.5` | A non-ratio is reported as "close" above this share of the OP's likes. |
